@@ -13,7 +13,9 @@ public class WebSecurityConfig  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth ->
-                auth.requestMatchers("/api/v1/simple/public").permitAll()
+                auth
+                        .requestMatchers("/api/v1/simple/public").permitAll()
+                        .requestMatchers("/**").hasAuthority("SCOPE_KM_ui")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()));
 
